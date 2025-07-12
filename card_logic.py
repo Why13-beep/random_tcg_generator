@@ -41,7 +41,7 @@ def take_effect(color,level):
         support = None
     return passive, support, prefix, suffix
 
-#generate card parameter
+#generate card parameter (you can change the value according to your want)
 def card_parameter(color,level):
     try:
         color_data = parameter_pool.get(color)
