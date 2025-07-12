@@ -5,7 +5,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 from card_logic import card_parameter, export_to_json, get_next_id
 
-
 class CardGeneratorApp(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -14,7 +13,7 @@ class CardGeneratorApp(ctk.CTk):
         self.configure(fg_color="#303030")
         self.current_card = None
         self.build_ui()
-
+    #popup
     def message_popup(self, title, message):
         from tkinter import messagebox
         #messagebox.showwarning(title, message)
@@ -25,7 +24,6 @@ class CardGeneratorApp(ctk.CTk):
 
         ctk.CTkLabel(confirm_popup, text=message, wraplength=280).pack(pady=20)
         ctk.CTkButton(confirm_popup, text="OK", command=confirm_popup.destroy).pack(pady=10)
-
 
     def build_ui(self):
         # sidebar
@@ -86,7 +84,7 @@ class CardGeneratorApp(ctk.CTk):
 
         self.radar_canvas = FigureCanvasTkAgg(self.radar_fig, master=display_frame)
         self.radar_canvas.get_tk_widget().pack(fill="both", expand=True)
-
+    #generate new random card
     def generate_card(self):
         color = self.color_var.get()
         level = self.level_var.get()
@@ -112,7 +110,7 @@ class CardGeneratorApp(ctk.CTk):
         print(parameter)
             
         self.update_display()
-
+    #save popup
     def show_save_popup(self):
         popup = ctk.CTkToplevel(self)
         popup.title("Save Card")
@@ -126,7 +124,7 @@ class CardGeneratorApp(ctk.CTk):
 
         def save_file():
             filename = filename_entry.get().strip()
-
+            # I think custom_info is dead function :p
             def custom_info(title, message):
                 confirm_popup = ctk.CTkToplevel()
                 confirm_popup.title(title)
@@ -166,7 +164,7 @@ class CardGeneratorApp(ctk.CTk):
 
         ctk.CTkButton(popup, text="Save", command=save_file).pack(pady=10)
         popup.bind("<Return>", lambda event: save_file())
-
+    #update_display
     def update_display(self):
         self.card_ax.clear()
         self.card_ax.axis("off")
@@ -201,7 +199,7 @@ class CardGeneratorApp(ctk.CTk):
         angles = np.linspace(0, 2 * np.pi, len(stats), endpoint=False)
         normalized += [normalized[0]]
         angles = np.concatenate((angles, [angles[0]]))
-
+        #update radar chart
         self.radar_ax.clear()
         self.radar_ax.set_facecolor('#2a2a2a')
         self.radar_ax.grid(color='gray', linestyle='dotted', linewidth=0.5)
@@ -219,8 +217,7 @@ class CardGeneratorApp(ctk.CTk):
             spine.set_linewidth(1)
 
         self.radar_canvas.draw()
-
-
+#test_play
 if __name__ == "__main__":
     app = CardGeneratorApp()
     app.mainloop()
