@@ -3,14 +3,15 @@ import json
 import random
 
 #json target
-json_dir ="e:/project/src"
-with open(os.path.join(json_dir, "effect.json"), "r", encoding="utf-8") as f:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+with open(os.path.join(BASE_DIR, "effect.json"), "r", encoding="utf-8") as f:
     effect_pool = json.load(f)
 
-with open(os.path.join(json_dir, "parameter.json"), "r", encoding="utf-8") as f:
+with open(os.path.join(BASE_DIR, "parameter.json"), "r", encoding="utf-8") as f:
     parameter_pool = json.load(f)
 
-#color as number
+#card color(type) as number
 color_number = {"1": "Red",
                 "2": "Blue",
                 "3": "Green",
@@ -19,7 +20,8 @@ color_number = {"1": "Red",
                 "6": "Grey"}
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-#take effect
+
+#take effect(The effects and passives are still in Indonesian, but you can change them).
 def take_effect(color,level):
     
     effect = effect_pool.get(color)
@@ -68,7 +70,7 @@ def card_parameter(color,level):
     except Exception as e:
         return f"Error: '{str(e)}"
     
-#get id
+#get id for cards
 def get_next_id(color, level, filename):
     if os.path.exists(filename) and os.path.getsize(filename) > 0:
         with open(filename, "r", encoding="utf-8") as f:
